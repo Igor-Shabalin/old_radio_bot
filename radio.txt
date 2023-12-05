@@ -1,0 +1,4 @@
+фантастика; http://fantasyradioru.no-ip.biz:8002/live
+СССР; https://sovetskie-pesni.ru:8005/stream
+старое радио; http://server.audiopedia.world:8000/ices128
+старое радио песни; https://www.liveradio.es/http://server.audiopedia.world:8000/music128
