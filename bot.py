@@ -6,11 +6,21 @@ import subprocess
 
 # Ваши переменные
 
-bot_key= 'YOU_BOT_TOKIEN'
-admin_id = [123, 345]  # ID администратора
+
+bot_key= 'ключ телеграм' #@old_radio_bot
+admin_id = [123, 456]  # ID администратора
 
 
 print('running the bot...')
+
+try:
+    with open("play.txt", 'r', encoding='utf-8') as file:
+            radio_stations = file.read().strip()
+    cmd = f'killall -v mpv; mpv {radio_stations} &'
+    subprocess.Popen(cmd, shell=True)
+except:
+    pass
+    
 
 # Функция для загрузки станций радио из файла
 def load_radio_stations(filename):
@@ -87,11 +97,17 @@ async def ask(update, context):
     if user_message in radio_stations:
         text = f'Воспроизведение: {user_message}'
         cmd = f'killall -v mpv; mpv {radio_stations[user_message]} &'
+        
+        with open('play.txt', 'w', encoding='utf-8') as file:
+            file.write(radio_stations[user_message])
+            
         await update.message.reply_text(text, reply_markup=ReplyKeyboardMarkup(get_keyboard(radio_stations), resize_keyboard=True))
         subprocess.Popen(cmd, shell=True)
     elif 'выключение радио' in user_message:
         text = 'Выключаю радио'
         cmd = 'killall -v mpv &'
+        with open('play.txt', 'w', encoding='utf-8') as file:
+            file.write('')
         await update.message.reply_text(text, reply_markup=ReplyKeyboardMarkup(get_keyboard(radio_stations), resize_keyboard=True))
         subprocess.Popen(cmd, shell=True)
 
